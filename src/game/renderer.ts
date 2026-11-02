@@ -98,9 +98,9 @@ export class Renderer {
     if (plant.kind === 'potato' && !plant.armed) {
       const ctx = this.ctx;
       ctx.fillStyle = '#fff3c3';
-      ctx.font = '600 10px "Microsoft YaHei", sans-serif';
+      ctx.font = '600 14px "Microsoft YaHei", sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('生根中', plant.x, plant.y - 29);
+      ctx.fillText('生根中', plant.x, plant.y - 32);
     }
   }
 
@@ -183,11 +183,11 @@ export class Renderer {
       this.health(zombie.x - 23, foot - 127, 46, ratio, zombie.elite ? '#efc95e' : '#c4dba4');
     }
     if (zombie.elite) {
-      ctx.fillStyle = '#fff0b2'; ctx.font = '700 10px "Microsoft YaHei", sans-serif'; ctx.textAlign = 'center';
-      ctx.fillText('精英', zombie.x, foot - 134);
+      ctx.fillStyle = '#fff0b2'; ctx.font = '700 14px "Microsoft YaHei", sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('精英', zombie.x, foot - 138);
     }
     if (zombie.slow > 0) {
-      ctx.fillStyle = '#d0f4ff'; ctx.font = '700 13px sans-serif'; ctx.textAlign = 'center';
+      ctx.fillStyle = '#d0f4ff'; ctx.font = '700 16px sans-serif'; ctx.textAlign = 'center';
       ctx.fillText('❄', zombie.x + 24, foot - 102);
     }
   }
@@ -214,7 +214,7 @@ export class Renderer {
     } else if (effect.kind === 'text') {
       ctx.save();
       ctx.globalAlpha = Math.max(0, 1 - effect.age / effect.duration);
-      ctx.font = '700 19px "Microsoft YaHei", sans-serif'; ctx.textAlign = 'center';
+      ctx.font = '700 22px "Microsoft YaHei", sans-serif'; ctx.textAlign = 'center';
       ctx.strokeStyle = '#315332'; ctx.lineWidth = 3;
       ctx.strokeText(effect.text || '', effect.x, effect.y - effect.age * 30);
       ctx.fillStyle = '#fff4ba'; ctx.fillText(effect.text || '', effect.x, effect.y - effect.age * 30);
