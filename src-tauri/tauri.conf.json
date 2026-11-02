@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "GardenGuard",
+  "version": "0.1.0",
+  "identifier": "com.kikyoshaw.gardenguard",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://127.0.0.1:1446",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "植物大战僵尸 · 花园守卫",
+        "width": 1440,
+        "height": 940,
+        "minWidth": 1050,
+        "minHeight": 760,
+        "center": true,
+        "resizable": true,
+        "backgroundColor": "#f5f3eb"
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; connect-src 'self' ipc: http://ipc.localhost; img-src 'self' data: blob:; media-src 'self' blob:; style-src 'self' 'unsafe-inline'; script-src 'self'",
+      "devCsp": "default-src 'self'; connect-src 'self' ipc: http://ipc.localhost http://127.0.0.1:1446 ws://127.0.0.1:1446; img-src 'self' data: blob:; media-src 'self' blob:; style-src 'self' 'unsafe-inline'; script-src 'self'"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "category": "Game",
+    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.ico"],
+    "shortDescription": "花园守卫：经典植物塔防、随机强化与无尽挑战",
+    "windows": {
+      "nsis": { "languages": ["SimpChinese"], "displayLanguageSelector": false }
+    }
+  }
+}
