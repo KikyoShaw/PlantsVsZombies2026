@@ -1,4 +1,5 @@
 import './style.css';
+import { invoke, isTauri } from '@tauri-apps/api/core';
 import { Assets } from './game/assets';
 import { GameAudio } from './game/audio';
 import { GameEngine } from './game/engine';
@@ -10,6 +11,7 @@ import { loadProfile, recordRun, saveProfile } from './storage';
 
 const icon = (name: string, size = 20): string => {
   const paths: Record<string, string> = {
+    github: '<path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-.9-2.7c3-.3 6.2-1.5 6.2-6.9A5.4 5.4 0 0 0 19.8 5a5 5 0 0 0-.1-3.5s-1.2-.4-3.8 1.5a13.4 13.4 0 0 0-7 0C6.3 1.1 5.1 1.5 5.1 1.5A5 5 0 0 0 5 5a5.4 5.4 0 0 0-1.5 3.7c0 5.4 3.2 6.6 6.2 6.9a3.4 3.4 0 0 0-.9 2.7V22"/>',
     leaf: '<path d="M20 4c0 10-4 16-11 16-4 0-6-3-5-6C5 7 11 5 20 4Z"/><path d="m4 21 11-11"/>',
     sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/>',
     play: '<path d="m8 5 11 7-11 7V5Z"/>',
@@ -65,7 +67,7 @@ app.innerHTML = `
     <header class="site-header">
       <a class="brand" href="#" data-action="brand" aria-label="花园守卫首页"><span class="brand-mark">${icon('leaf', 27)}</span><span><strong>花园守卫</strong><small>PLANTS VS. ZOMBIES</small></span></a>
       <span class="header-tag">一片草坪，无限可能</span>
-      <div class="header-actions"><span class="local-label"><i></i> 单人 · 离线花园</span><button class="icon-button audio-button" data-action="sound" title="切换声音" aria-label="切换声音">${icon('sound')}</button><button class="icon-button" data-action="help" title="游戏说明" aria-label="游戏说明">${icon('help')}</button></div>
+      <div class="header-actions"><span class="local-label"><i></i> 单人 · 离线花园</span><a class="icon-button github-link" data-action="github" href="https://github.com/KikyoShaw/PlantsVsZombies2026" target="_blank" rel="noopener noreferrer" title="打开 GitHub 仓库（外部浏览器）" aria-label="打开花园守卫 GitHub 仓库（外部浏览器）">${icon('github')}<span>GitHub</span></a><button class="icon-button audio-button" data-action="sound" title="切换声音" aria-label="切换声音">${icon('sound')}</button><button class="icon-button" data-action="help" title="游戏说明" aria-label="游戏说明">${icon('help')}</button></div>
     </header>
     <main id="menu-page" class="menu-page">
       <section class="welcome">
@@ -455,6 +457,12 @@ app.addEventListener('click', event => {
     return;
   }
   switch (action) {
+    case 'github':
+      if (isTauri()) {
+        event.preventDefault();
+        void invoke<void>('open_repository').catch(() => notice('打开 GitHub 仓库失败，请稍后重试。'));
+      }
+      break;
     case 'brand': event.preventDefault(); if (engine.state.phase !== 'menu') {
       if (engine.state.phase === 'won' || engine.state.phase === 'lost') returnToMenu(); else openUtility('leave');
     } break;

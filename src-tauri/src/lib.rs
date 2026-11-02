@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::{collections::BTreeMap, fs, io::Write, sync::Mutex};
 use tauri::Manager;
+use tauri_plugin_opener::OpenerExt;
 
 const PROFILE_VERSION: u32 = 1;
 
@@ -77,11 +78,19 @@ fn save_profile(app: tauri::AppHandle, lock: tauri::State<'_, Mutex<()>>, profil
     result.map_err(|e| e.to_string())
 }
 
+#[tauri::command]
+fn open_repository(app: tauri::AppHandle) -> Result<(), String> {
+    app.opener()
+        .open_url("https://github.com/KikyoShaw/PlantsVsZombies2026", None::<&str>)
+        .map_err(|e| e.to_string())
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_opener::init())
         .manage(Mutex::new(()))
-        .invoke_handler(tauri::generate_handler![load_profile, save_profile])
+        .invoke_handler(tauri::generate_handler![load_profile, save_profile, open_repository])
         .run(tauri::generate_context!())
         .expect("failed to start Garden Guard");
 }

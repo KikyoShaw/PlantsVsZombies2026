@@ -51,6 +51,7 @@ button:disabled:active { transform: none; }
 .local-label i { width: 5px; height: 5px; border-radius: 50%; background: #78976c; }
 .icon-button { display: inline-flex; align-items: center; justify-content: center; width: 35px; height: 35px; border-radius: 50%; color: #6c7d67; background: transparent; }
 .icon-button:hover { background: #e8ecdf; color: var(--forest); }
+.github-link { width: auto; gap: 6px; padding: 0 10px; border-radius: 18px; font-size: 11px; white-space: nowrap; }
 .eyebrow { font-size: 9px; letter-spacing: 2.3px; color: #8d987d; font-weight: 600; line-height: 1.6; }
 .eyebrow > span { width: 16px; height: 1px; display: inline-block; background: #a3af8d; vertical-align: middle; margin-right: 8px; }
 
